@@ -1,111 +1,250 @@
+/* 1. IMPORTACIÓN DE FUENTE Y VARIABLES GLOBALES (:root)*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  --bg-color: #e1e4e7; /* El color de fondo de toda la página */
+  --text-main: #000000; /* Color principal de los textos*/
+  --primary: #014da5; /* El azul principal para líneas y botones */
+  --primary-hover: #01b7ff; /* El celeste brillante que aparece cuando le paso el mouse */
+  --accent: #f59e0b; /* Amarillo/naranja cálido para resaltar cosas importantes */
+  --header-bg: #011931; /* El azul súper oscuro para el fondo del encabezado */
+  
+  --card-bg: #ffffff; /* El fondo blanco de las tarjetas */
+  --shadow-sm: 0 4px 6px -1px rgba(0,51,102, 0.1); /* Una sombrita chica y azulada para que las cajas no se vean planas */
+  --shadow-lg: 0 20px 25px -5px rgba(0,51,102, 0.2); /* Sombra más grande para el efecto al pasar el mouse */
+  --radius: 4px; /* Redondeo esquina */
+  --transition: all 0.2s ease-in-out; /* velocidad de los efectos visuales */
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-body {
+/* 2. RESETEO BÁSICO */
+* {
   margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+  padding: 0;
   box-sizing: border-box;
 }
 
-h1,
+/* 3. ESTRUCTURA GENERAL */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color); /* Llamo al fondo gris */
+  color: var(--text-main); /* Llamo al texto negro */
+  
+  /* GRID GENERAL: Armo la estructura de la página en 3 filas */
+  display: grid;
+  grid-template-rows: auto 1fr auto; 
+
+  min-height: 100vh; 
+  line-height: 1.6; 
+}
+
+/* 4. HEADER Y NAVEGACIÓN */
+
+header {
+  background: linear-gradient(135deg, var(--primary), var(--header-bg)); /* Fondo azul en degradado */
+  color: white;
+  padding: 1.5rem 2rem;
+  box-shadow: var(--shadow-sm);
+  
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+}
+
+.header-main-content {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  width: 100%; 
+  max-width: 1300px; 
+  margin-bottom: 2rem; 
+  margin-top: 1rem;
+}
+
+/* EL LOGO */
+.logo_unju {
+  width: 150px; 
+  height: auto; 
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); /* Sombra al logo png transparente */
+}
+
+/* TEXTOS  */
+.textos-header {
+  text-align: center; /* Texto centrado */
+  flex: 1; 
+}
+
+.textos-header h1 {
+  font-size: 2.8rem;
+  font-weight: 800; 
+  margin-bottom: 0.2rem;
+}
+
+.textos-header p {
+  color: #cbd5e1;
+  font-size: 1.1rem;
+}
+
+/* EL ESPACIADOR INVISIBLE */
+.logo-spacer {
+  width: 150px; /* Pesa EXACTAMENTE igual que el logo para que no se tuerza el centro */
+}
+
+/* --- MENÚ DE NAVEGACIÓN --- */
+nav ul {
+  display: flex; /* Pongo los botones en fila */
+  justify-content: center; /* Los agrupo en el medio */
+  gap: 1.5rem; /* Espacio exacto entre cada botón */
+  list-style: none; /* Le saco los puntitos feos a la lista */
+  flex-wrap: wrap; /* Si la pantalla es chica, bajan de renglón en vez de apretarse */
+}
+
+nav a {
+  color: white;
+  text-decoration: none; 
+  background: rgba(253, 253, 253, 0.05); 
+  padding: 0.8rem 1.8rem; 
+  border-radius: 99px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil transparente */
+  transition: var(--transition); 
+}
+
+/* ESTADOS DEL MENÚ */
+nav a:hover { /* Cuando paso el mouse por arriba */
+  background: var(--accent); 
+  color: var(--text-main);
+  transform: translateY(-3px); 
+  box-shadow: 0 10px 15px rgba(255, 204, 0, 0.3); 
+}
+
+nav a:focus { /* Cuando navego con la tecla TAB del teclado */
+  outline: 3px dashed var(--accent); /* Borde punteado amarillo */
+  outline-offset: 4px;
+}
+
+nav a:active { 
+  transform: scale(0.95); 
+}
+
+/* 5. MAIN Y TÍTULOS El bloque central donde van a estar las tarjetas. */
+main {
+  max-width: 1200px; /* Tope máximo de ancho */
+  margin: 0 auto; /* centrar toda la caja en el medio de la pantalla */
+  padding: 4rem 2rem; /* Colchón interior (mucho arriba/abajo, poco a los lados) */
+  width: 100%;
+}
+
 h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 2.5rem;
+  width: 100%;
+  border-left: 6px solid var(--accent); /* Dibujo la barra amarilla lateral */
+  padding-left: 20px; /* Separo el texto de esa barra amarilla */
+  padding-bottom: 0;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+hr { display: none; } /* Oculto la línea recta */
+
+/* 6. TARJETAS DE ESTADÍSTICAS */
+main section:first-of-type {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 5rem;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+article {
+  background: var(--card-bg);
+  padding: 2.5rem 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  border-top: 5px solid var(--primary);
+  transition: var(--transition);
+  text-align: center;
+  
+  flex: 1 1 280px; 
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+article:hover {
+  transform: translateY(-8px) scale(1.02); 
+  box-shadow: var(--shadow-lg);
+  border-top-color: var(--accent); 
+}
+
+article h3 {
+  color: var(--text-main);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 1.5rem;
+}
+
+article strong {
+  display: block;
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.lista-novedades {
+  list-style: none; /* Saca los puntos de la lista */
+  display: flex; 
+  flex-direction: column; /* Apila noticias hacia abajo */
+  gap: 1rem; /* Espacio entre cada noticia */
+}
+
+.lista-novedades li {
+  background: var(--card-bg); /* Fondo blanco */
+  padding: 1.5rem 2rem; 
+  border-radius: var(--radius); 
+  box-shadow: var(--shadow-sm); /* Sombra sutil */
+  border-left: 6px solid var(--primary); /* Barra azul a la izquierda */
+  transition: var(--transition); 
+  display: flex;
+  align-items: center; /* Alinea el texto al centro de la franja */
+}
+
+/* EFECTO DE DESPLAZAMIENTO */
+.lista-novedades li:hover {
+  transform: translateX(15px); /* Desliza la noticia a la derecha */
+  border-left-color: var(--primary-hover); /* Cambia el color de la barra */
+  box-shadow: var(--shadow-lg); /* Sombra más fuerte al tocarla */
+}
+
+.lista-novedades li strong {
+  color: var(--primary); /* Nombres en azul */
+  margin-right: 0.5rem; /* Separa el nombre del texto */
+}
+
+
+/* 8. FOOTER */
+
+footer {
+  background: var(--header-bg); /* Fondo azul oscuro como el header */
+  color: #94a3b8; /* Gris suave  */
+  text-align: center; 
+  padding: 2.5rem; 
+  font-size: 0.95rem; /* Letra un poquito más chica que el resto */
+}
+
+
+/* 9. DETALLES */
+::-webkit-scrollbar {
+  width: 10px; /* Ancho de la barrita */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color); /* Color del carril por donde corre la barra */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary); 
+  border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover); /* Cambia de color */
 }

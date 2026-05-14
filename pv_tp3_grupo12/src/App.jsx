@@ -1,7 +1,18 @@
+import {Header} from "./components/Header";
+import {Nav} from "./components/Nav";
+//import {Proyectos} from "./components/Proyectos";
+import {Footer} from "./components/Footer";
+import { ListaProyectos } from "./components/listaproyectos";
+
 function App() {
   return (
-    <h1>Hola grupo, se ve creo</h1>
-  )
+    <>
+      <Header />
+      <Nav />
+      <ListaProyectos />
+      <Footer />
+    </> 
+  );
 }
 
-export default App
+export default App; 

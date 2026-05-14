@@ -1,13 +1,76 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pv_tp3_grupo12</title>
-  </head>
-  <body>
-    <div id="root"></div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>Gestión de Proyectos Educativos - Inicio</title>
+    <style>
+  /* Estilo Interno - Requisito del TP */
+        .lista-novedades li strong { text-decoration: underline; }
+    </style>
+    <link rel="stylesheet" href="assets/css/index.css">
+</head>
+<body>
+ <header>
+        <div class="header-main-content">
+            <img src="images/logo_unju.png" alt="Logo de la FI-UNJU" class="logo_unju">
+
+            <div class="textos-header">
+                <h1>Portal de Proyectos FI-UNJU</h1>
+                <p>Bienvenido a la Plataforma de Gestión de Proyectos Educativos</p>
+            </div>
+
+            <div class="logo-spacer"></div>
+
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="proyectos.html">Proyectos</a></li>
+                <li><a href="detalle.html">Detalles</a></li>
+                <li><a href="perfil.html">Mi Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Estadísticas de la Plataforma</h2>
+            <article>
+                <h3>Proyectos Totales</h3>
+                <p>Actualmente contamos con <strong>15</strong> proyectos educativos en curso.</p>
+            </article>
+            <article>
+                <h3>Tareas para Hoy</h3>
+                <p>Tienes <strong>4</strong> revisiones pendientes en tu tablero.</p>
+            </article>
+            <article>
+                <h3>Mensajes</h3>
+                <p>Hay <strong>2</strong> nuevas consultas en el foro de alumnos.</p>
+            </article>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Novedades del Sistema</h2>
+            <ul class="lista-novedades">
+                <li><strong>Ignacio Cardozo</strong> agregó imágenes a la galería de proyectos.</li>
+                <li><strong>Mauri Salas</strong> publicó los objetivos de la "App Matemática".</li>
+                <li><strong>Camila Mansilla</strong> actualizó su información y completó el archivo perfil.html.</li>
+                <li>Se optimizó la estructura de navegación en todos los módulos.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer style="letter-spacing: 1px;">
+        <p>2026 Grupo 12 - Programación Visual - Facultad de Ingeniería UNJU</p>
+    </footer>
+  <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-  </body>
+</body>
 </html>

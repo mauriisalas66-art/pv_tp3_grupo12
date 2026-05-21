@@ -255,3 +255,24 @@ nav {
   padding: 15px 0;
   box-shadow: 0 4px 6px -1px rgba(0,0,0, 0.3); /* Sombrita para que resalte */
 }
+.estado-conteiner {
+  font-size: 0.85rem !important;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.estado-conteiner strong {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 800;
+  display: inline;
+  font-size: 1.1rem;
+}
+
+.estado-finalizado {
+  color: #16a34a !important; 
+}
+
+.estado-en-curso {
+  color: var(--accent) !important; 
+}

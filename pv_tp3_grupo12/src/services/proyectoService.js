@@ -10,8 +10,10 @@ export const ProyectoService = (() => {
       descripcion:
         "App para resolver integrales y derivadas.\n\nIncluye teoría y ejercicios prácticos para el ciclo básico.",
       recursos: [
-        "https://github.com/matematica-app",
-        "https://drive.google.com/matematica-guia"
+        {
+          nombre: "GitHub",
+          url: "https://github.com/matematica-app"
+        }
       ],
       equipo: [
         { nombre: "Nacho", rol: "Backend" },
@@ -28,8 +30,10 @@ export const ProyectoService = (() => {
       descripcion:
         "Gestión académica de asistencia.\n\nSistema para controlar el presentismo y exportar reportes mensuales.",
       recursos: [
-        "https://drive.google.com/registro-manual",
-        "https://github.com/registro-alumnos"
+        {
+          nombre: "Drive",
+          url: "https://drive.google.com/registro-manual"
+        }
       ],
       equipo: [
         { nombre: "Mauri", rol: "DBA" },
@@ -46,8 +50,10 @@ export const ProyectoService = (() => {
       descripcion:
         "Acceso a material académico.\n\nRepositorio digital con libros de consulta rápida y acceso a artículos científicos.",
       recursos: [
-        "https://drive.google.com/biblioteca",
-        "https://github.com/biblioteca-unju"
+        {
+          nombre: "GitHub",
+          url: "https://github.com/biblioteca-unju"
+        }
       ],
       equipo: [
         { nombre: "Jairo", rol: "Documentación" },
@@ -64,8 +70,10 @@ export const ProyectoService = (() => {
       descripcion:
         "Cursos virtuales interactivos.\n\nPlataforma con videos, foros y ejercicios de evaluación automática.",
       recursos: [
-        "https://drive.google.com/cursos",
-        "https://github.com/plataforma-online"
+        {
+          nombre: "Drive",
+          url: "https://drive.google.com/cursos"
+        }
       ],
       equipo: [
         { nombre: "Ale", rol: "Full Stack" },
@@ -82,8 +90,10 @@ export const ProyectoService = (() => {
       descripcion:
         "Asistente 24/7 para dudas.\n\nResuelve trámites administrativos automáticamente mediante IA.",
       recursos: [
-        "https://github.com/chatbot-unju",
-        "https://drive.google.com/chatbot-docs"
+        {
+          nombre: "GitHub",
+          url: "https://github.com/chatbot-unju"
+        }
       ],
       equipo: [
         { nombre: "Mauri", rol: "IA Developer" },
@@ -105,10 +115,10 @@ export const ProyectoService = (() => {
         id: nuevoId,
         titulo: nuevo.titulo,
         categoria: nuevo.categoria,
-        estado: nuevo.estado || "En Curso",
+        estado: "En Curso",
         disponible: true,
         descripcion: nuevo.descripcion || "Sin descripción",
-        recursos: nuevo.recursos || [],
+        recursos: nuevo.enlaces || [],
         equipo: nuevo.equipo || []
       };
 
@@ -119,11 +129,13 @@ export const ProyectoService = (() => {
 
     eliminarProyecto: (id) => {
 
-      proyectos = proyectos.map((p) =>
-        p.id === id
-          ? { ...p, disponible: false }
-          : p
+      const proyectoEncontrado = proyectos.find(
+        (p) => p.id === id
       );
+
+      if (proyectoEncontrado) {
+        proyectoEncontrado.disponible = false;
+      }
 
       return proyectos.filter((p) => p.disponible);
     },

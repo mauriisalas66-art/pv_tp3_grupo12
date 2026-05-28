@@ -1,100 +1,87 @@
 // src/components/ListaProyectos.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ProyectoService } from '../services/proyectoService';
 import { ProyectoCard } from './ProyectoCard';
 import { DetalleProyecto } from './DetalleProyecto';
+import {RegistroActividad} from './RegistroActividad';
+import {FormularioProyecto} from './FormularioProyecto';
 
 export const ListaProyectos = () => {
-    const [proyectos, setProyectos] = 
-useState(ProyectoService.obtenerProyectos());
+    const [proyectos, setProyectos] = useState(ProyectoService.obtenerProyectos());
     const [busqueda, setBusqueda] = useState("");
-    const [proyectoSeleccionado, setProyectoSeleccionado] = 
-useState(null);
+    const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
+    const [fechaActualizacion, setFechaActualizacion] = useState(null);
+    const [disparadorActividad, setDisparadorActividad] =useState(0);
 
-    const [formulario, setFormulario] = useState({
-        titulo: "",
-        descripcion: "",
-        categoria: "Estudiantes",
-        estado: "En Curso" //
-    });
-    const { titulo, descripcion, categoria, estado } = formulario;
+    useEffect(() => {
+        if (disparadorActividad === 0) return;
+        const ahora = new Date();
+        const formato = `${ahora.toLocaleDateString()} a las ${ahora.toLocaleTimeString()} hs`;
+        setFechaActualizacion(formato);
+    }, [disparadorActividad]);
 
-    const manejarCambioForm = (e) => setFormulario({ ...formulario,
-[e.target.name]: e.target.value });
-
-    const handleAgregar = () => {
-        if (titulo.trim() === "") return alert("Falta el título");
-        setProyectos(ProyectoService.agregarProyecto({ titulo, descripcion, categoria, estado }));
-        setFormulario({ titulo: "", descripcion: "", categoria:"Estudiantes", estado: "En Curso" });
-        };
-
-    const handleEliminar = (id) => setProyectos(ProyectoService.eliminarProyecto(id));
-    const handleCambiarEstado = (id) => setProyectos(ProyectoService.cambiarEstado(id));
-
-    const handleBuscar = (e) => {
-        setBusqueda(e.target.value);
-        setProyectos(ProyectoService.buscarProyecto(e.target.value)
-);
+    const manejarBusqueda = (e) => {
+        const texto = e.target.value;
+        setBusqueda(texto);
+        setProyectos(ProyectoService.buscarProyecto(texto));
     };
 
+    const manejarEliminar = (id) => {
+        setProyectos(ProyectoService.eliminarProyecto(id));
+        if (proyectoSelecccionado?.id === id) setProyectoSeleccionado(null);
+        setDisparadorActividad(prev => prev + 1);
+    };
+
+    const manejarCamcioEstado = (id) => {
+        setProyectos(ProyectoService.cambiarEstado(id));
+        setDisparadorActividad(prev => prev + 1);
+    }
+
+    const manejarAgregarProyecto = (paqueteRecibido) => {
+        const listaActualizada = ProyectoService.agregarProyecto(paqueteRecibido);
+        setProyectos(listaActualizada);
+        setDisparadorActividad(prev => prev + 1);
+    };
+    
     return (
-        <main>
+        <section className="contenedor-proyectos">
             {proyectoSeleccionado ? (
-                <DetalleProyecto proyecto={proyectoSeleccionado}
-onVolver={() => setProyectoSeleccionado(null)} />
+                <DetalleProyecto proyecto={proyectoSeleccionado} onVolver={() => setProyectoSeleccionado(null)} />
             ) : (
-                <>
-                    <h2 style={{ textAlign: 'center', marginBottom:
-'20px' }}>Explorador de Proyectos</h2>
-
-                    <div style={{ textAlign: 'center',
-marginBottom: '20px', padding: '20px', background: '#272421',
-borderRadius: '8px', color: 'white' }}>
-                        <h3>Agregar Nuevo Proyecto</h3>
-                        <input name="titulo" type="text"placeholder="Título..." value={titulo} onChange={manejarCambioForm}
-style={{ padding: '10px', marginRight: '10px' }} />
-                        <input name="descripcion" type="text"placeholder="Descripción breve..." value={descripcion}
-onChange={manejarCambioForm} style={{ padding: '10px', marginRight:'10px' }} />
-
-                        <select name="categoria" value={categoria}
-onChange={manejarCambioForm} style={{ padding: '10px', marginRight:'10px' }}>
-
-                            <option
-value="Estudiantes">Estudiantes</option>
-                            <option
-value="Docentes">Docentes</option>
-                        </select>
-
-                        
-                        <select name="estado" value={estado}
-onChange={manejarCambioForm} style={{ padding: '10px', marginRight:'10px' }}>
-                            <option value="En Curso">En Curso</option>
-                            <option value="Finalizado">Finalizado</option>
-                        </select>
-
-                        <button onClick={handleAgregar} style={{padding: '10px', background: '#014da5', color: 'white', cursor:'pointer', border: 'none', borderRadius: '4px' }}>Agregar</button>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', gap: '1.5rem' }}>
+                    <div style={{width: '100%'}}>
+                        <FormularioProyecto onAgregar={manejarAgregarProyecto} />
                     </div>
 
-                    <div style={{ textAlign: 'center',marginBottom: '30px' }}>
-                        <input type="text" placeholder="Buscar
-proyecto..." value={busqueda} onChange={handleBuscar} style={{padding: '10px', width: '300px' }} />
+                    <h2>Proyectos Educativos</h2>
+                    <div style= {{width: '100%', dispplay: 'flex', justifyContent: 'center'}}>
+                        <input 
+                            type="text"
+                            placeholder="Buscar proyecto por título..."
+                            value={busqueda}
+                            onChange={manejarBusqueda}
+                            style= {{padding: '0.6rem 1.2rem', width: '300px', borderRadius: '20px', border: '1px solid #cc', fontSize: '1rem', outline: 'none'}}
+                        />
                     </div>
-
-                    {}
-                    <section className="contenedor">
-                        {proyectos.map(p => (
-                            <ProyectoCard
-                                key={p.id}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'center', width: '100%' }}>
+                        {proyectos.mapp((p) => (
+                            <ProyectoCard 
+                                key={p.id} 
                                 proyecto={p}
-                                onEliminar={handleEliminar}
+                                onEliminar={manejarEliminar}
                                 onVerDetalle={setProyectoSeleccionado}
-
-                                onCambiarEstado={handleCambiarEstado} 
+                                onCambiarEstado={manejarCambioEstado}
                             />
+
                         ))}
-                    </section>
-                </>
+                    </div>
+                    <RegistroActividad fecha={fechaActualizacion} />
+                </div>
             )}
-        </main>
+        </section>
     );
 };
+                 
+            
+
+    

@@ -2,22 +2,43 @@
 export const DetalleProyecto = ({ proyecto, onVolver }) => {
   const { titulo, categoria, estado, descripcion, enlaces, recursos, equipo } = proyecto;
   const listaEnlaces = enlaces || recursos || [];
- return (
-  <div className="detalle-modal">
-     <button onClick={onVolver} style={{ marginBottom: '20px', padding: '10px', background: '#011931', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-      ← Cerrar Detalles
-    </button>
-    <h2>{titulo}</h2>
-    <p><strong>Descripción:</strong> 
-    {descripcion}</p>
-    <h3>Archivos y Recursos</h3>
-     <ul>
-      {recursos.length > 0 ? recursos.map((rec, i) => <li key={i}>{rec}</li>) : <li>No hay recursos subidos.</li>}
-     </ul>
-     <h3>Equipo de Trabajo</h3>
-      <ul>
-         {equipo.length > 0 ? equipo.map((int, i) => <li key={i}><strong>{int.nombre}</strong> (Rol: {int.rol})</li>) : <li>Equipo sin asignar.</li>}
+
+  return (
+    <div style={{ padding: '2rem', backgroundColor: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0', maxWidth: '600px', margin: '2rem auto' }}>
+      <button onClick={onVolver} style={{ marginBottom: '1rem', backgroundColor: '#64748b', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '4px', cursor: 'pointer' }}>
+        Volver a la lista
+      </button>
+      <h2 style={{ color: '#1e293b', marginBottom: '0.5rem' }}>{titulo}</h2>
+      <p style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '1rem' }}>
+        Categoría: <strong>{categoria}</strong> | Estado: <strong>{estado}</strong>
+      </p>
+      
+      <h3 style={{ color: '#334155', fontSize: '1.2rem' }}>Descripción del Proyecto</h3>
+      <p style={{ color: '#475569', lineHeight: '1.6', marginBottom: '1.5rem' }}>{descripcion}</p>
+      
+      <h3 style={{ color: '#334155', fontSize: '1.2rem' }}>Recursos y Enlaces</h3>
+      <ul style={{ marginBottom: '1.5rem', paddingLeft: '1.2rem' }}>
+        {listaEnlaces.map((link, index) => (
+          <li key={index} style={{ marginBottom: '0.5rem' }}>
+            {link.url ? (
+              <a href={link.url} target="_blank" rel="noreferrer" style={{ color: '#3b82f6', textDecoration: 'none', fontWeight: 'bold' }}>
+                {link.nombre}
+              </a>
+            ) : (
+              <span style={{ color: '#475569' }}>{typeof link === 'string' ? link : link.nombre}</span>
+            )}
+          </li>
+        ))}
       </ul>
-      </div>
- );
-}; 
+
+      <h3 style={{ color: '#334155', fontSize: '1.2rem' }}>Equipo de Trabajo</h3>
+      <ul style={{ paddingLeft: '1.2rem' }}>
+        {equipo && equipo.map((integrante, index) => (
+          <li key={index} style={{ marginBottom: '0.5rem', color: '#334155' }}>
+            <strong>{integrante.nombre}</strong> - <span style={{ color: '#64748b', fontStyle: 'italic' }}>{integrante.rol || integrante.role}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};

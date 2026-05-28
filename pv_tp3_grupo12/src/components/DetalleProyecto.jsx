@@ -1,7 +1,7 @@
 // src/components/DetalleProyecto.jsx
 export const DetalleProyecto = ({ proyecto, onVolver }) => {
   const { titulo, categoria, estado, descripcion, enlaces, recursos, equipo } = proyecto;
-
+  const listaEnlaces = enlaces || recursos || [];
  return (
   <div className="detalle-modal">
      <button onClick={onVolver} style={{ marginBottom: '20px', padding: '10px', background: '#011931', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>

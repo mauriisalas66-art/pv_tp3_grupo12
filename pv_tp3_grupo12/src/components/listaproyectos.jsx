@@ -28,11 +28,11 @@ export const ListaProyectos = () => {
 
     const manejarEliminar = (id) => {
         setProyectos(ProyectoService.eliminarProyecto(id));
-        if (proyectoSelecccionado?.id === id) setProyectoSeleccionado(null);
+        if (proyectoSeleccionado?.id === id) setProyectoSeleccionado(null);
         setDisparadorActividad(prev => prev + 1);
     };
 
-    const manejarCamcioEstado = (id) => {
+    const manejarCambioEstado = (id) => {
         setProyectos(ProyectoService.cambiarEstado(id));
         setDisparadorActividad(prev => prev + 1);
     }
@@ -54,17 +54,17 @@ export const ListaProyectos = () => {
                     </div>
 
                     <h2>Proyectos Educativos</h2>
-                    <div style= {{width: '100%', dispplay: 'flex', justifyContent: 'center'}}>
+                    <div style= {{width: '100%', display: 'flex', justifyContent: 'center'}}>
                         <input 
                             type="text"
                             placeholder="Buscar proyecto por título..."
                             value={busqueda}
                             onChange={manejarBusqueda}
-                            style= {{padding: '0.6rem 1.2rem', width: '300px', borderRadius: '20px', border: '1px solid #cc', fontSize: '1rem', outline: 'none'}}
+                            style= {{padding: '0.6rem 1.2rem', width: '300px', borderRadius: '20px', border: '1px solid #ccc', fontSize: '1rem', outline: 'none'}}
                         />
                     </div>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'center', width: '100%' }}>
-                        {proyectos.mapp((p) => (
+                        {proyectos.map((p) => (
                             <ProyectoCard 
                                 key={p.id} 
                                 proyecto={p}

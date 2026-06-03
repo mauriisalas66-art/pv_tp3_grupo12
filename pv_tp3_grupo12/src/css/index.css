@@ -14,12 +14,7 @@
   --shadow-lg: 0 20px 25px -5px rgba(0,51,102, 0.2); /* Sombra más grande para el efecto al pasar el mouse */
   --radius: 4px; /* Redondeo esquina */
   --transition: all 0.2s ease-in-out; /* velocidad de los efectos visuales */
-}
-/* 2. RESETEO BÁSICO */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+
 }
 
 /* 3. ESTRUCTURA GENERAL */

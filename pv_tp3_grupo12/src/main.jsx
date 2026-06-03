@@ -1,4 +1,5 @@
 //Cuando comienza con Mayuscula es un componente, si comienza con minuscula es un elemento html
+// src/main.jsx
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';

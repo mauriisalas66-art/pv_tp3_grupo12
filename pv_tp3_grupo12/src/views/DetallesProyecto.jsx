@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ProyectoService } from '../services/proyectoService';
 import { Card, Button, ListGroup, Badge } from 'react-bootstrap';
 
-export const DetalleProyectos = () => {
+export const DetallesProyecto = () => {
   const { id } = useParams();
   const proyecto = ProyectoService.obtenerProyectos().find(p => p.id === parseInt(id));
 

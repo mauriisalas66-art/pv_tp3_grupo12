@@ -16,16 +16,16 @@ export const Dashboard = () => {
                 </Col>
                 <Col md={6}>
                 <Card className="shadow-sm">
-                    <CardHeader className="bg-primary text-white">Ingreso al Sistema</CardHeader>
+                    <Card.Header className="bg-primary text-white">Ingreso al Sistema</Card.Header>
                     <Card.Body>
                         <Form>
                             <Form.Group className="mb-3">
-                                <form.Label>Usuario Universitario</form.Label>
+                                <Form.Label>Usuario Universitario</Form.Label>
                                 <Form.Control type="text" placeholder="Ej: alumno-unju" />
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Contraseña</Form.Label>
-                                    <FormControl type="password" placeholder="***" />
+                                    <Form.Control type="password" placeholder="***" />
                             </Form.Group>
                             <Button variant="success" type="button" className="w-100">
                                 Iniciar Sesion

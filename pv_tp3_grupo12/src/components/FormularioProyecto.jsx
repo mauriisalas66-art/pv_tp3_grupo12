@@ -1,5 +1,6 @@
-//src/components/FormularioProyecto.jsx 
+// src/components/FormularioProyecto.jsx 
 import { useState } from 'react';
+import { Form, Button, Card, Row, Col } from 'react-bootstrap';
 
 export const FormularioProyecto = ({ onAgregar }) => {
   const [titulo, setTitulo] = useState("");
@@ -8,20 +9,16 @@ export const FormularioProyecto = ({ onAgregar }) => {
   const [enlaces, setEnlaces] = useState([]);
   const [equipo, setEquipo] = useState([]);
 
-  const añadirFilaEnlace = () => {
-    setEnlaces([...enlaces, { nombre: "", url: "" }]);
-  };
-
+  const añadirFilaEnlace = () => setEnlaces([...enlaces, { nombre: "", url: "" }]);
+  
   const actualizarEnlace = (index, campo, valor) => {
     const nuevaLista = [...enlaces];
     nuevaLista[index][campo] = valor;
     setEnlaces(nuevaLista);
   };
 
-  const añadirFilaEquipo = () => {
-    setEquipo([...equipo, { nombre: "", rol: "" }]);
-  };
-
+  const añadirFilaEquipo = () => setEquipo([...equipo, { nombre: "", rol: "" }]);
+  
   const actualizarEquipo = (index, campo, valor) => {
     const nuevaLista = [...equipo];
     nuevaLista[index][campo] = valor;
@@ -31,19 +28,11 @@ export const FormularioProyecto = ({ onAgregar }) => {
   const manejarEnvio = (e) => {
     e.preventDefault();
     if (!titulo.trim()) {
-      alert("Por favor, Jairo, ingresá un título para el proyecto.");
+      alert("Por favor, ingresá un título para el proyecto.");
       return;
     }
 
-    const nuevoProyectoPaquete = {
-      titulo: titulo,
-      categoria: categoria,
-      descripcion: descripcion,
-      enlaces: enlaces,
-      equipo: equipo
-    };
-
-    onAgregar(nuevoProyectoPaquete);
+    onAgregar({ titulo, categoria, descripcion, enlaces, equipo });
 
     setTitulo("");
     setDescripcion("");
@@ -52,57 +41,76 @@ export const FormularioProyecto = ({ onAgregar }) => {
   };
 
   return (
-    <form onSubmit={manejarEnvio} style={{ backgroundColor: '#fff', padding: '1.5rem', borderRadius: '8px', marginBottom: '2rem', border: '1px solid #e2e8f0' }}>
-      <h3 style={{ color: '#003355', marginTop: 0 }}>Nuevo Proyecto Educativo</h3>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <Card className="mb-5 shadow-sm border-0">
+      <Card.Body className="p-4">
+        <h3 className="text-primary mb-4">Nuevo Proyecto Educativo</h3>
         
-        <label style={{ fontWeight: 'bold', color: '#444' }}>Título del Proyecto:</label>
-        <input type="text" placeholder="Ej: Plataforma de Notas UNJu" value={titulo} onChange={(e) => setTitulo(e.target.value)} style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }} />
-        
-        <label style={{ fontWeight: 'bold', color: '#444' }}>Categoría:</label>
-        <select value={categoria} onChange={(e) => setCategoria(e.target.value)} style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }}>
-          <option value="Estudiantes">Estudiantes</option>
-          <option value="Docentes">Docentes</option>
-        </select>
+        <Form onSubmit={manejarEnvio}>
+          <Row className="mb-3">
+            <Col md={8}>
+              <Form.Group>
+                <Form.Label className="fw-bold">Título del Proyecto:</Form.Label>
+                <Form.Control type="text" placeholder="Ej: Plataforma de Notas UNJu" value={titulo} onChange={(e) => setTitulo(e.target.value)} />
+              </Form.Group>
+            </Col>
+            
+            <Col md={4}>
+              <Form.Group>
+                <Form.Label className="fw-bold">Categoría:</Form.Label>
+                <Form.Select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
+                  <option value="Estudiantes">Estudiantes</option>
+                  <option value="Docentes">Docentes</option>
+                </Form.Select>
+              </Form.Group>
+            </Col>
+          </Row>
 
-        <label style={{ fontWeight: 'bold', color: '#444' }}>Descripción Extendida:</label>
-        <textarea placeholder="Escribí de qué se trata el proyecto aquí..." value={descripcion} onChange={(e) => setDescripcion(e.target.value)} style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc', height: '80px', resize: 'none' }} />
+          <Form.Group className="mb-4">
+            <Form.Label className="fw-bold">Descripción Extendida:</Form.Label>
+            <Form.Control as="textarea" rows={3} placeholder="Escribí de qué se trata el proyecto aquí..." value={descripcion} onChange={(e) => setDescripcion(e.target.value)} style={{ resize: 'none' }} />
+          </Form.Group>
 
-        <div style={{ border: '1px solid #cbd5e1', padding: '1rem', borderRadius: '6px', backgroundColor: '#f8fafc' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-            <strong style={{ color: '#003355' }}>Enlaces y Recursos:</strong>
-            <button type="button" onClick={añadirFilaEnlace} style={{ backgroundColor: '#005088', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', padding: '0.3rem 0.6rem', fontWeight: 'bold' }}>
-              + Añadir Link
-            </button>
-          </div>
-          {enlaces.map((link, index) => (
-            <div key={index} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
-              <input type="text" placeholder="Nombre (Ej: GitHub)" value={link.nombre} onChange={(e) => actualizarEnlace(index, 'nombre', e.target.value)} style={{ flex: 1, padding: '0.4rem' }} />
-              <input type="text" placeholder="URL (https://...)" value={link.url} onChange={(e) => actualizarEnlace(index, 'url', e.target.value)} style={{ flex: 2, padding: '0.4rem' }} />
+          {/* Bloque de Enlaces */}
+          <div className="bg-light p-3 rounded border mb-4">
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <strong className="text-secondary">Enlaces y Recursos:</strong>
+              <Button variant="outline-primary" size="sm" onClick={añadirFilaEnlace}>+ Añadir Link</Button>
             </div>
-          ))}
-        </div>
-
-        <div style={{ border: '1px solid #cbd5e1', padding: '1rem', borderRadius: '6px', backgroundColor: '#f8fafc' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-            <strong style={{ color: '#003355' }}>Equipo de Trabajo:</strong>
-            <button type="button" onClick={añadirFilaEquipo} style={{ backgroundColor: '#005088', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', padding: '0.3rem 0.6rem', fontWeight: 'bold' }}>
-              + Añadir Miembro
-            </button>
+            {enlaces.map((link, index) => (
+              <Row key={index} className="mb-2">
+                <Col>
+                  <Form.Control type="text" placeholder="Nombre (Ej: GitHub)" value={link.nombre} onChange={(e) => actualizarEnlace(index, 'nombre', e.target.value)} />
+                </Col>
+                <Col>
+                  <Form.Control type="text" placeholder="URL (https://...)" value={link.url} onChange={(e) => actualizarEnlace(index, 'url', e.target.value)} />
+                </Col>
+              </Row>
+            ))}
           </div>
-          {equipo.map((persona, index) => (
-            <div key={index} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
-              <input type="text" placeholder="Nombre compañero" value={persona.nombre} onChange={(e) => actualizarEquipo(index, 'nombre', e.target.value)} style={{ flex: 1, padding: '0.4rem' }} />
-              <input type="text" placeholder="Rol (Ej: Backend)" value={persona.rol} onChange={(e) => actualizarEquipo(index, 'rol', e.target.value)} style={{ flex: 1, padding: '0.4rem' }} />
+
+          {/* Bloque de Equipo */}
+          <div className="bg-light p-3 rounded border mb-4">
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <strong className="text-secondary">Equipo de Trabajo:</strong>
+              <Button variant="outline-primary" size="sm" onClick={añadirFilaEquipo}>+ Añadir Miembro</Button>
             </div>
-          ))}
-        </div>
+            {equipo.map((persona, index) => (
+              <Row key={index} className="mb-2">
+                <Col>
+                  <Form.Control type="text" placeholder="Nombre compañero" value={persona.nombre} onChange={(e) => actualizarEquipo(index, 'nombre', e.target.value)} />
+                </Col>
+                <Col>
+                  <Form.Control type="text" placeholder="Rol (Ej: Backend)" value={persona.rol} onChange={(e) => actualizarEquipo(index, 'rol', e.target.value)} />
+                </Col>
+              </Row>
+            ))}
+          </div>
 
-        <button type="submit" style={{ backgroundColor: '#005088', color: 'white', padding: '0.7rem', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', fontSize: '1rem' }}>
-          Guardar Proyecto
-        </button>
-
-      </div>
-    </form>
+          <Button variant="primary" type="submit" size="lg" className="w-100 fw-bold shadow-sm">
+            Guardar Proyecto
+          </Button>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 };

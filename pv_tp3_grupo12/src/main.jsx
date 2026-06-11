@@ -6,13 +6,19 @@ import './css/index.css';
 
 import { App } from './App.jsx';
 import { Dashboard } from './views/Dashboard.jsx';
+import { ListaProyectos } from './views/ListaProyectos.jsx';
+import { DetallesProyecto } from './views/DetallesProyecto.jsx';
+import { PerfilUsuario } from './views/PerfilUsuario.jsx';
 
 const rutas = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      { index: true, element: <Dashboard /> } // Libre para poder loguearse
+      { index: true, element: <Dashboard /> },
+      { path: "proyectos", element: <ListaProyectos /> },
+      { path: "proyectos/:id", element: <DetallesProyecto /> },
+      { path: "perfil", element: <PerfilUsuario /> }
     ]
   }
 ]);

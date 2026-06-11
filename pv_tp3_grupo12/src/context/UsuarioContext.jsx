@@ -11,7 +11,7 @@ export const UsuarioProvider = ({children}) => {
         if (usuario) {
             localStorage.setItem("perfil_usuario", JSON.stringify(usuario));
         }else {
-            localStorage.remnoveItem("perfil_usuario");
+            localStorage.removeItem("perfil_usuario");
         }
     }, [usuario] );
 
